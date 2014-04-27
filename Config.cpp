@@ -4,7 +4,7 @@ Config::Config(Repository *repo) {
   this->repo = repo;
 }
 
-void Config::receiveMessage(char *buf, int16_t msgsize) {
+void Config::receiveMessage(unsigned char *buf, int16_t msgsize) {
   if (msgsize >= sizeof(FeatureConfigHeader)) {
     FeatureConfigHeader *header = (FeatureConfigHeader*)buf;
 

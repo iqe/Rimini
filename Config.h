@@ -15,7 +15,7 @@ class Config : Feature {
 public:
   Config(Repository *repo);
 
-  void receiveMessage(char* buf, int16_t msgsize);
+  void receiveMessage(unsigned char *buf, int16_t msgsize);
 
 private:
   Repository *repo;

@@ -4,7 +4,7 @@ Comm::Comm(Repository *repo) {
   this->repo = repo;
 }
 
-void Comm::receiveMessage(char *buf, int16_t msgsize) {
+void Comm::receiveMessage(unsigned char *buf, int16_t msgsize) {
   if (msgsize >= 2) { // sizeof(int16_t)
     int *featureId = (int*)buf;
     Feature *feature = repo->getFeature(*featureId);
