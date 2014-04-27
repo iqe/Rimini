@@ -5,19 +5,12 @@
 #include <PinKeeper.h>
 #include <Factory.h>
 
-struct FeatureConfigHeader {
-  uint8_t mode;
-  int16_t id;
-  uint8_t pinCount;
-  uint8_t configSize;
-};
-
 class Repository {
 public:
   Repository(PinKeeper *pinKeeper, Factory *factory, uint8_t featureCount);
   ~Repository();
 
-  void createFeature(char *cfgBuf, int16_t cfgBufSize);
+  void createFeature(uint8_t mode, int16_t id, FeatureSpec spec);
   void deleteFeature(int16_t id);
 
   Feature* getFeature(int16_t id);

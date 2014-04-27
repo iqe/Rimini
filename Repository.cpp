@@ -17,34 +17,16 @@ Repository::~Repository() {
 
 /* Feature management */
 
-void Repository::createFeature(char *cfgBuf, int16_t cfgBufSize) {
-  if (cfgBufSize >= sizeof(FeatureConfigHeader)) {
-    FeatureConfigHeader *header = (FeatureConfigHeader*)cfgBuf;
+void Repository::createFeature(uint8_t mode, int16_t id, FeatureSpec spec) {
+  if (pinKeeper->areAllPinsUnused(spec.pins, spec.pinCount)) {
+    feature_factory_method new_feature = factory->getFactoryMethod(mode);
 
-    if (cfgBufSize == sizeof(FeatureConfigHeader) + header->pinCount + header->configSize) {
+    if (new_feature != 0) {
+      Feature *feature = new_feature(spec); // memory allocation!
 
-      if (isValidFeatureId(header->id) && !isUsedFeatureId(header->id)) {
-
-        uint8_t *usedPins = (uint8_t*)(cfgBuf + sizeof(FeatureConfigHeader));
-        void *config = (void*)(cfgBuf + sizeof(FeatureConfigHeader) + header->pinCount);
-
-        if (pinKeeper->areAllPinsUnused(usedPins, header->pinCount)) {
-          feature_factory_method new_feature = factory->getFactoryMethod(header->mode);
-
-          if (new_feature != 0) {
-            FeatureSpec spec;
-            spec.pins = usedPins;
-            spec.pinCount = header->pinCount;
-            spec.config = config;
-            spec.configSize = header->configSize;
-
-            Feature *feature = new_feature(spec); // memory allocation!
-            if (feature != 0) {
-              features[header->id] = feature;
-              pinKeeper->markPinsUsed(header->id, usedPins, header->pinCount);
-            }
-          }
-        }
+      if (feature != 0) {
+        features[id] = feature;
+        pinKeeper->markPinsUsed(id, spec.pins, spec.pinCount);
       }
     }
   }
