@@ -22,7 +22,7 @@ struct FeatureSpec {
   int16_t configSize;
 };
 
-typedef Feature* (*feature_factory_method)(FeatureSpec);
+typedef Feature* (*FeatureFactoryMethod)(FeatureSpec);
 
 #endif
 

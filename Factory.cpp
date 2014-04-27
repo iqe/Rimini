@@ -3,18 +3,18 @@
 Factory::Factory(uint8_t methodCount) {
   this->methodCount = methodCount;
 
-  methods = new feature_factory_method[methodCount] {};
+  methods = new FeatureFactoryMethod[methodCount] {};
 }
 
 Factory::~Factory() {
   delete methods;
 }
 
-feature_factory_method Factory::getFactoryMethod(uint8_t type) {
+FeatureFactoryMethod Factory::getFactoryMethod(uint8_t type) {
   return isUsedType(type) ? methods[type] : 0;
 }
 
-void Factory::setFactoryMethod(uint8_t type, feature_factory_method method) {
+void Factory::setFactoryMethod(uint8_t type, FeatureFactoryMethod method) {
   if (isValidType(type)) {
     methods[type] = method;
   }
