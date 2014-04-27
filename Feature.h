@@ -15,12 +15,12 @@ public:
   virtual void receiveMessage(char* buf, int16_t msgsize) {}
 };
 
-typedef struct {
+struct FeatureSpec {
   uint8_t* pins;
   uint8_t pinCount;
   void* config;
   int16_t configSize;
-} FeatureSpec;
+};
 
 typedef Feature* (*feature_factory_method)(FeatureSpec);
 
