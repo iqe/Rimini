@@ -5,7 +5,7 @@
 #include <Repository.h>
 
 struct FeatureConfigHeader {
-  uint8_t mode;
+  uint8_t type;
   int16_t id;
   uint8_t pinCount;
   uint8_t configSize;

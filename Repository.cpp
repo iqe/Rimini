@@ -17,9 +17,9 @@ Repository::~Repository() {
 
 /* Feature management */
 
-void Repository::createFeature(uint8_t mode, int16_t id, FeatureSpec spec) {
+void Repository::createFeature(uint8_t type, int16_t id, FeatureSpec spec) {
   if (pinKeeper->areAllPinsUnused(spec.pins, spec.pinCount)) {
-    feature_factory_method new_feature = factory->getFactoryMethod(mode);
+    feature_factory_method new_feature = factory->getFactoryMethod(type);
 
     if (new_feature != 0) {
       Feature *feature = new_feature(spec); // memory allocation!

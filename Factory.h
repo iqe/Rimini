@@ -8,15 +8,15 @@ public:
   Factory(uint8_t methodCount);
   ~Factory();
 
-  feature_factory_method getFactoryMethod(uint8_t mode);
-  void setFactoryMethod(uint8_t mode, feature_factory_method method);
+  feature_factory_method getFactoryMethod(uint8_t type);
+  void setFactoryMethod(uint8_t type, feature_factory_method method);
 
 private:
   uint8_t methodCount;
   feature_factory_method *methods;
 
-  bool isUsedMode(uint8_t mode);
-  bool isValidMode(uint8_t mode);
+  bool isUsedType(uint8_t type);
+  bool isValidType(uint8_t type);
 };
 
 #endif

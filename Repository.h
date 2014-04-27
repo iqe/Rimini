@@ -10,7 +10,7 @@ public:
   Repository(PinKeeper *pinKeeper, Factory *factory, uint8_t featureCount);
   ~Repository();
 
-  void createFeature(uint8_t mode, int16_t id, FeatureSpec spec);
+  void createFeature(uint8_t type, int16_t id, FeatureSpec spec);
   void deleteFeature(int16_t id);
 
   Feature* getFeature(int16_t id);

@@ -27,7 +27,7 @@ void Config::receiveMessage(unsigned char *buf, int16_t msgsize) {
       spec.config = config;
       spec.configSize = header->configSize;
 
-      repo->createFeature(header->mode, header->id, spec);
+      repo->createFeature(header->type, header->id, spec);
     }
   }
 }
