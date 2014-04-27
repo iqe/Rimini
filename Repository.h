@@ -20,6 +20,8 @@ public:
   void createFeature(char *cfgBuf, int16_t cfgBufSize);
   void deleteFeature(int16_t id);
 
+  Feature* getFeature(int16_t id);
+
 private:
   PinKeeper *pinKeeper;
   Factory *factory;

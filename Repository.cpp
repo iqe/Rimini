@@ -60,6 +60,10 @@ void Repository::deleteFeature(int16_t id) {
   }
 }
 
+Feature* Repository::getFeature(int16_t id) {
+  return isUsedFeatureId(id) ? features[id] : 0;
+}
+
 bool Repository::isUsedFeatureId(int16_t id) {
   return isValidFeatureId(id) && features[id] != 0;
 }
