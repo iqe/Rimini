@@ -13,12 +13,14 @@ struct FeatureConfigHeader {
 
 class Config : Feature {
 public:
-  Config(Repository *repo);
+  static Feature* create(FeatureSpec spec);
 
   void receiveMessage(unsigned char *buf, int16_t msgsize);
 
 private:
   Repository *repo;
+
+  Config(Repository *repo);
 };
 
 #endif

@@ -1,5 +1,13 @@
 #include <Config.h>
 
+Feature* Config::create(FeatureSpec spec) {
+  if (spec.pinCount == 0 && spec.configSize == sizeof(Repository*)) {
+    Repository *repo = (Repository*)spec.config;
+    return new Config(repo);
+  }
+  return 0;
+}
+
 Config::Config(Repository *repo) {
   this->repo = repo;
 }
