@@ -6,7 +6,6 @@
 class Feature {
 public:
   ~Feature() {}
-  virtual void initialize() {}
 
   virtual void update() {}
   virtual bool isChanged() { return false; }
