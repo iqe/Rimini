@@ -18,7 +18,7 @@ public:
   void update();
   bool isChanged();
 
-  int16_t sendMessage(unsigned char *buf, int16_t bufsize);
+  int16_t writeMessage(unsigned char *buf, int16_t bufsize);
 
 private:
   uint8_t pin;

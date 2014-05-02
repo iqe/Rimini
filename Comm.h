@@ -8,7 +8,7 @@ class Comm : Feature {
 public:
   Comm(Repository* repo);
 
-  void receiveMessage(unsigned char *buf, int16_t msgsize);
+  void readMessage(unsigned char *buf, int16_t msgsize);
 
 private:
   Repository *repo;

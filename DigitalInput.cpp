@@ -53,7 +53,7 @@ bool DigitalInput::isChanged() {
   return changed;
 }
 
-int16_t DigitalInput::sendMessage(unsigned char *buf, int16_t bufsize) {
+int16_t DigitalInput::writeMessage(unsigned char *buf, int16_t bufsize) {
   if (bufsize >= sizeof(uint8_t)) {
     buf[0] = value == HIGH ? 'H' : 'L';
     return sizeof(uint8_t);

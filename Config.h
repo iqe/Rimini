@@ -15,7 +15,7 @@ class Config : Feature {
 public:
   static Feature* create(FeatureSpec spec);
 
-  void receiveMessage(unsigned char *buf, int16_t msgsize);
+  void readMessage(unsigned char *buf, int16_t msgsize);
 
 private:
   Repository *repo;

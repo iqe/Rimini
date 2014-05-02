@@ -11,8 +11,8 @@ public:
   virtual void update() {}
   virtual bool isChanged() { return false; }
 
-  virtual int16_t sendMessage(unsigned char *buf, int16_t bufsize) { return 0; }
-  virtual void receiveMessage(unsigned char *buf, int16_t msgsize) {}
+  virtual int16_t writeMessage(unsigned char *buf, int16_t bufsize) { return 0; }
+  virtual void readMessage(unsigned char *buf, int16_t msgsize) {}
 };
 
 struct FeatureSpec {
