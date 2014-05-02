@@ -13,21 +13,24 @@ Config::Config(Repository *repo) {
 }
 
 void Config::readMessage(unsigned char *buf, int16_t msgsize) {
-  if (msgsize >= sizeof(FeatureConfigHeader)) {
-    FeatureConfigHeader *header = (FeatureConfigHeader*)buf;
+  if (msgsize >= CONFIG_MESSAGE_MIN_SIZE) {
+    uint8_t featureType = buf[0];
+    int16_t featureId = *((int16_t*)&buf[1]);
+    uint8_t pinCount = buf[3];
 
-    if (msgsize == sizeof(FeatureConfigHeader) + header->pinCount + header->configSize) {
+    if (msgsize >= CONFIG_MESSAGE_MIN_SIZE + pinCount) {
+      uint8_t configSize = buf[3 + pinCount];
 
-      uint8_t *usedPins = (uint8_t*)(buf + sizeof(FeatureConfigHeader));
-      void *config = (void*)(buf + sizeof(FeatureConfigHeader) + header->pinCount);
+      uint8_t *pins = (uint8_t*)(&buf[3]);
+      void *config = (void*)(buf + CONFIG_MESSAGE_MIN_SIZE + pinCount);
 
       FeatureSpec spec;
-      spec.pins = usedPins;
-      spec.pinCount = header->pinCount;
+      spec.pinCount = pinCount;
+      spec.pins = pins;
+      spec.configSize = configSize;
       spec.config = config;
-      spec.configSize = header->configSize;
 
-      repo->createFeature(header->type, header->id, spec);
+      repo->createFeature(featureType, featureId, spec);
     }
   }
 }
