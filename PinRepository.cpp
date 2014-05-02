@@ -1,15 +1,15 @@
-#include <PinKeeper.h>
+#include <PinRepository.h>
 
-PinKeeper::PinKeeper(uint8_t pinCount) {
+PinRepository::PinRepository(uint8_t pinCount) {
   this->pinCount = pinCount;
   pins = new int16_t[pinCount];
 }
 
-PinKeeper::~PinKeeper() {
+PinRepository::~PinRepository() {
   delete pins;
 }
 
-bool PinKeeper::areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinsCount) {
+bool PinRepository::areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinsCount) {
   for (int i = 0; i < checkedPinsCount; i++) {
     uint8_t pin = checkedPins[i];
 
@@ -20,7 +20,7 @@ bool PinKeeper::areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinsCount)
   return true;
 }
 
-void PinKeeper::markPinsUsed(int16_t marker, uint8_t *usedPins, uint8_t usedPinsCount) {
+void PinRepository::markPinsUsed(int16_t marker, uint8_t *usedPins, uint8_t usedPinsCount) {
   for (int i = 0; i < usedPinsCount; i++) {
     uint8_t pin = usedPins[i];
 
@@ -30,7 +30,7 @@ void PinKeeper::markPinsUsed(int16_t marker, uint8_t *usedPins, uint8_t usedPins
   }
 }
 
-void PinKeeper::markPinsUnused(int16_t marker) {
+void PinRepository::markPinsUnused(int16_t marker) {
   for (int i = 0; i < pinCount; i++) {
     if (pins[i] == marker) {
       pins[i] = 0;
@@ -38,7 +38,7 @@ void PinKeeper::markPinsUnused(int16_t marker) {
   }
 }
 
-bool PinKeeper::isValidPin(uint8_t pin) {
+bool PinRepository::isValidPin(uint8_t pin) {
   return pin >= 0 && pin < pinCount;
 }
 

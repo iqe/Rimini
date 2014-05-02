@@ -2,12 +2,12 @@
 #define Repository_h
 
 #include <Feature.h>
-#include <PinKeeper.h>
+#include <PinRepository.h>
 #include <Factory.h>
 
 class Repository {
 public:
-  Repository(PinKeeper *pinKeeper, Factory *factory, uint8_t featureCount);
+  Repository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount);
   ~Repository();
 
   void createFeature(uint8_t type, int16_t id, FeatureSpec spec);
@@ -16,7 +16,7 @@ public:
   Feature* getFeature(int16_t id);
 
 private:
-  PinKeeper *pinKeeper;
+  PinRepository *pinRepository;
   Factory *factory;
 
   int16_t featureCount;

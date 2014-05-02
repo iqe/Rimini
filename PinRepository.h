@@ -1,13 +1,13 @@
-#ifndef PinKeeper_h
-#define PinKeeper_h
+#ifndef PinRepository_h
+#define PinRepository_h
 
 #include <inttypes.h>
 
-class PinKeeper {
+class PinRepository {
 
 public:
-  PinKeeper(uint8_t pinCount);
-  ~PinKeeper();
+  PinRepository(uint8_t pinCount);
+  ~PinRepository();
 
   bool areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinCount);
 

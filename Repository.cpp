@@ -1,7 +1,7 @@
 #include <Repository.h>
 
-Repository::Repository(PinKeeper *pinKeeper, Factory *factory, uint8_t featureCount) {
-  this->pinKeeper = pinKeeper;
+Repository::Repository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount) {
+  this->pinRepository = pinRepository;
   this->factory = factory;
 
   this->featureCount = featureCount;
@@ -18,7 +18,7 @@ Repository::~Repository() {
 /* Feature management */
 
 void Repository::createFeature(uint8_t type, int16_t id, FeatureSpec spec) {
-  if (pinKeeper->areAllPinsUnused(spec.pins, spec.pinCount)) {
+  if (pinRepository->areAllPinsUnused(spec.pins, spec.pinCount)) {
     FeatureFactoryMethod new_feature = factory->getFactoryMethod(type);
 
     if (new_feature != 0) {
@@ -26,7 +26,7 @@ void Repository::createFeature(uint8_t type, int16_t id, FeatureSpec spec) {
 
       if (feature != 0) {
         features[id] = feature;
-        pinKeeper->markPinsUsed(id, spec.pins, spec.pinCount);
+        pinRepository->markPinsUsed(id, spec.pins, spec.pinCount);
       }
     }
   }
@@ -38,7 +38,7 @@ void Repository::deleteFeature(int16_t id) {
 
     delete feature;
     features[id] = 0;
-    pinKeeper->markPinsUnused(id);
+    pinRepository->markPinsUnused(id);
   }
 }
 
