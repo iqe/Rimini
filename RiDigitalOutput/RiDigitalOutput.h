@@ -1,15 +1,15 @@
-#ifndef DigitalOutput_h
-#define DigitalOutput_h
+#ifndef RiDigitalOutput_h
+#define RiDigitalOutput_h
 
 #include <Feature.h>
 
 #define DO_FLAG_REVERSED 1
 
-struct DigitalOutputConfig {
+struct RiDigitalOutputConfig {
   uint8_t flags;
 };
 
-class DigitalOutput : Feature {
+class RiDigitalOutput : Feature {
 public:
   static Feature* create(FeatureSpec spec);
 
@@ -19,7 +19,7 @@ private:
   uint8_t pin;
   uint8_t flags;
 
-  DigitalOutput(uint8_t pin, DigitalOutputConfig *config);
+  RiDigitalOutput(uint8_t pin, RiDigitalOutputConfig *config);
 
   bool isSet(uint8_t flag);
 };

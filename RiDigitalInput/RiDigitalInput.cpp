@@ -1,15 +1,15 @@
 #include <Arduino.h>
-#include <DigitalInput.h>
+#include <RiDigitalInput.h>
 
-Feature* DigitalInput::create(FeatureSpec spec) {
-  if (spec.pinCount == 1 && spec.configSize == sizeof(DigitalInputConfig)) {
-    return new DigitalInput(spec.pins[0], (DigitalInputConfig*)spec.config);
+Feature* RiDigitalInput::create(FeatureSpec spec) {
+  if (spec.pinCount == 1 && spec.configSize == sizeof(RiDigitalInputConfig)) {
+    return new RiDigitalInput(spec.pins[0], (RiDigitalInputConfig*)spec.config);
   }
 
   return 0;
 }
 
-DigitalInput::DigitalInput(uint8_t pin, DigitalInputConfig *config) {
+RiDigitalInput::RiDigitalInput(uint8_t pin, RiDigitalInputConfig *config) {
   this->pin = pin;
   flags = config->flags;
   debounceMillis = config->debounceMillis;
@@ -25,7 +25,7 @@ DigitalInput::DigitalInput(uint8_t pin, DigitalInputConfig *config) {
   }
 }
 
-void DigitalInput::update() {
+void RiDigitalInput::update() {
   uint32_t now = millis();
 
   changed = false;
@@ -49,11 +49,11 @@ void DigitalInput::update() {
   }
 }
 
-bool DigitalInput::isChanged() {
+bool RiDigitalInput::isChanged() {
   return changed;
 }
 
-int16_t DigitalInput::writeMessage(unsigned char *buf, int16_t bufsize) {
+int16_t RiDigitalInput::writeMessage(unsigned char *buf, int16_t bufsize) {
   if (bufsize >= sizeof(uint8_t)) {
     buf[0] = value == HIGH ? 'H' : 'L';
     return sizeof(uint8_t);
@@ -61,7 +61,7 @@ int16_t DigitalInput::writeMessage(unsigned char *buf, int16_t bufsize) {
   return 0;
 }
 
-bool DigitalInput::isSet(uint8_t flag) {
+bool RiDigitalInput::isSet(uint8_t flag) {
   return flags & flag;
 }
 

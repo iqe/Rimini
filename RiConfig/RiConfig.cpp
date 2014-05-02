@@ -1,18 +1,18 @@
-#include <Config.h>
+#include <RiConfig.h>
 
-Feature* Config::create(FeatureSpec spec) {
+Feature* RiConfig::create(FeatureSpec spec) {
   if (spec.pinCount == 0 && spec.configSize == sizeof(Repository*)) {
     Repository *repo = (Repository*)spec.config;
-    return new Config(repo);
+    return new RiConfig(repo);
   }
   return 0;
 }
 
-Config::Config(Repository *repo) {
+RiConfig::RiConfig(Repository *repo) {
   this->repo = repo;
 }
 
-void Config::readMessage(unsigned char *buf, int16_t msgsize) {
+void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
   if (msgsize >= CONFIG_MESSAGE_MIN_SIZE) {
     uint8_t featureType = buf[0];
     int16_t featureId = *((int16_t*)&buf[1]);

@@ -1,11 +1,11 @@
-#ifndef Config_h
-#define Config_h
+#ifndef RiConfig_h
+#define RiConfig_h
 
 #include <Feature.h>
 #include <Repository.h>
 
 /*
-  Config Message looks like this:
+  RiConfig Message looks like this:
 
   uint8_t type;        <-- Type of configured feature
   int16_t featureId;   <-- ID of feature that should be configured
@@ -18,7 +18,7 @@
 
 #define CONFIG_MESSAGE_MIN_SIZE 5 // type + featureId + pinCount + configSize
 
-class Config : Feature {
+class RiConfig : Feature {
 public:
   static Feature* create(FeatureSpec spec);
 
@@ -27,7 +27,7 @@ public:
 private:
   Repository *repo;
 
-  Config(Repository *repo);
+  RiConfig(Repository *repo);
 };
 
 #endif

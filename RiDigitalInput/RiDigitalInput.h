@@ -1,17 +1,17 @@
-#ifndef DigitalInput_h
-#define DigitalInput_h
+#ifndef RiDigitalInput_h
+#define RiDigitalInput_h
 
 #include <Feature.h>
 
 #define DI_FLAG_INPUT_PULLUP 1
 #define DI_FLAG_REVERSED     2
 
-struct DigitalInputConfig {
+struct RiDigitalInputConfig {
   uint8_t flags;
   uint32_t debounceMillis;
 };
 
-class DigitalInput : Feature {
+class RiDigitalInput : Feature {
 public:
   static Feature* create(FeatureSpec spec);
 
@@ -29,7 +29,7 @@ private:
   bool changed;
   uint32_t lastChangedMillis;
 
-  DigitalInput(uint8_t pin, DigitalInputConfig *config);
+  RiDigitalInput(uint8_t pin, RiDigitalInputConfig *config);
 
   bool isSet(uint8_t flag);
 };
