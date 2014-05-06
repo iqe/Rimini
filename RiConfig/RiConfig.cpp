@@ -13,16 +13,31 @@ RiConfig::RiConfig(Repository *repo) {
 }
 
 void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
-  if (msgsize >= CONFIG_MESSAGE_MIN_SIZE) {
-    uint8_t featureType = buf[0];
+  if (msgsize >= 3) { // action + featureId
+    uint8_t action = buf[0];
     int16_t featureId = *((int16_t*)&buf[1]);
-    uint8_t pinCount = buf[3];
 
-    if (msgsize >= CONFIG_MESSAGE_MIN_SIZE + pinCount) {
+    switch (action) {
+    case CONFIG_ACTION_CREATE:
+      createFeature(featureId, &buf[3], msgsize - 3);
+      break;
+    case CONFIG_ACTION_DELETE:
+      repo->deleteFeature(featureId);
+      break;
+    }
+  }
+}
+
+void RiConfig::createFeature(int16_t featureId, unsigned char *buf, int16_t msgsize) {
+  if (msgsize >= 3) { // featureType + pinCount + configSize
+    uint8_t featureType = buf[0];
+    uint8_t pinCount = buf[1];
+
+    if (msgsize >= 3 + pinCount) {
       uint8_t configSize = buf[3 + pinCount];
 
       uint8_t *pins = (uint8_t*)(&buf[3]);
-      void *config = (void*)(buf + CONFIG_MESSAGE_MIN_SIZE + pinCount);
+      void *config = (void*)(buf + 3 + pinCount);
 
       FeatureSpec spec;
       spec.pinCount = pinCount;
