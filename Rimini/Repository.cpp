@@ -17,7 +17,7 @@ Repository::~Repository() {
 
 /* Feature management */
 
-void Repository::createFeature(uint8_t type, int16_t id, FeatureSpec spec) {
+void Repository::createFeature(uint8_t type, int16_t featureId, FeatureSpec spec) {
   if (pinRepository->areAllPinsUnused(spec.pins, spec.pinCount)) {
     FeatureFactoryMethod new_feature = factory->getFactoryMethod(type);
 
@@ -25,25 +25,25 @@ void Repository::createFeature(uint8_t type, int16_t id, FeatureSpec spec) {
       Feature *feature = new_feature(spec); // memory allocation!
 
       if (feature != 0) {
-        features[id] = feature;
-        pinRepository->markPinsUsed(id, spec.pins, spec.pinCount);
+        features[featureId] = feature;
+        pinRepository->registerPinsForFeature(featureId, spec.pins, spec.pinCount);
       }
     }
   }
 }
 
-void Repository::deleteFeature(int16_t id) {
-  if (isUsedFeatureId(id)) {
-    Feature *feature = features[id];
+void Repository::deleteFeature(int16_t featureId) {
+  if (isUsedFeatureId(featureId)) {
+    Feature *feature = features[featureId];
 
     delete feature;
-    features[id] = 0;
-    pinRepository->markPinsUnused(id);
+    features[featureId] = 0;
+    pinRepository->unregisterPinsOfFeature(featureId);
   }
 }
 
-Feature* Repository::getFeature(int16_t id) {
-  return isUsedFeatureId(id) ? features[id] : 0;
+Feature* Repository::getFeature(int16_t featureId) {
+  return isUsedFeatureId(featureId) ? features[featureId] : 0;
 }
 
 bool Repository::isUsedFeatureId(int16_t id) {

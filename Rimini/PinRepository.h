@@ -6,18 +6,19 @@
 class PinRepository {
 
 public:
-  PinRepository(uint8_t pinCount);
+  PinRepository(uint8_t maxPinCount);
   ~PinRepository();
 
   bool areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinCount);
 
-  void markPinsUsed(int16_t marker, uint8_t *usedPins, uint8_t usedPinCount);
-  void markPinsUnused(int16_t marker);
+  void registerPinsForFeature(int16_t featureId, uint8_t *pins, uint8_t pinCount);
+  void unregisterPinsOfFeature(int16_t featureId);
 
 private:
-  uint8_t pinCount; // up to 256 pins
-  int16_t *pins; // pins[5] = 42 -> pin 5, marker 42
+  uint8_t usedPinCount; // up to 256 pins
+  int16_t *usedPins; // usedPins[5] = 42 -> pin 5 is used by feature with ID 42
 
+  bool isUsedPin(uint8_t pin);
   bool isValidPin(uint8_t pin);
 };
 

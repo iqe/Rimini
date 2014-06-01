@@ -10,10 +10,10 @@ public:
   Repository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount);
   ~Repository();
 
-  void createFeature(uint8_t type, int16_t id, FeatureSpec spec);
-  void deleteFeature(int16_t id);
+  void createFeature(uint8_t type, int16_t featureId, FeatureSpec spec);
+  void deleteFeature(int16_t featureId);
 
-  Feature* getFeature(int16_t id);
+  Feature* getFeature(int16_t featureId);
 
 private:
   PinRepository *pinRepository;

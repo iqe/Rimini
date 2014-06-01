@@ -1,44 +1,48 @@
 #include <PinRepository.h>
 
-PinRepository::PinRepository(uint8_t pinCount) {
-  this->pinCount = pinCount;
-  pins = new int16_t[pinCount];
+PinRepository::PinRepository(uint8_t maxPinCount) {
+  this->usedPinCount = maxPinCount;
+  usedPins = new int16_t[maxPinCount];
 }
 
 PinRepository::~PinRepository() {
-  delete pins;
+  delete usedPins;
 }
 
 bool PinRepository::areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinsCount) {
   for (int i = 0; i < checkedPinsCount; i++) {
     uint8_t pin = checkedPins[i];
 
-    if (isValidPin(pin) && pins[pin] != 0) {
+    if (isUsedPin(pin)) {
       return false;
     }
   }
   return true;
 }
 
-void PinRepository::markPinsUsed(int16_t marker, uint8_t *usedPins, uint8_t usedPinsCount) {
-  for (int i = 0; i < usedPinsCount; i++) {
-    uint8_t pin = usedPins[i];
+void PinRepository::registerPinsForFeature(int16_t featureId, uint8_t *pins, uint8_t pinCount) {
+  for (int i = 0; i < pinCount; i++) {
+    uint8_t pin = pins[i];
 
     if (isValidPin(pin)) {
-      pins[pin] = marker;
+      usedPins[pin] = featureId;
     }
   }
 }
 
-void PinRepository::markPinsUnused(int16_t marker) {
-  for (int i = 0; i < pinCount; i++) {
-    if (pins[i] == marker) {
-      pins[i] = 0;
+void PinRepository::unregisterPinsOfFeature(int16_t featureId) {
+  for (int i = 0; i < usedPinCount; i++) {
+    if (usedPins[i] == featureId) {
+      usedPins[i] = 0;
     }
   }
+}
+
+bool PinRepository::isUsedPin(uint8_t pin) {
+  return isValidPin(pin) && usedPins[pin] != 0;
 }
 
 bool PinRepository::isValidPin(uint8_t pin) {
-  return pin >= 0 && pin < pinCount;
+  return pin >= 0 && pin < usedPinCount;
 }
 
