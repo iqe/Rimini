@@ -1,14 +1,14 @@
-#ifndef Repository_h
-#define Repository_h
+#ifndef FeatureRepository_h
+#define FeatureRepository_h
 
 #include <Feature.h>
 #include <PinRepository.h>
 #include <Factory.h>
 
-class Repository {
+class FeatureRepository {
 public:
-  Repository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount);
-  ~Repository();
+  FeatureRepository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount);
+  ~FeatureRepository();
 
   void createFeature(uint8_t type, int16_t featureId, FeatureSpec spec);
   void deleteFeature(int16_t featureId);

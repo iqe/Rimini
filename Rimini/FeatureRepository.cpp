@@ -1,6 +1,6 @@
-#include <Repository.h>
+#include <FeatureRepository.h>
 
-Repository::Repository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount) {
+FeatureRepository::FeatureRepository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount) {
   this->pinRepository = pinRepository;
   this->factory = factory;
 
@@ -8,7 +8,7 @@ Repository::Repository(PinRepository *pinRepository, Factory *factory, uint8_t f
   this->features = new Feature*[featureCount];
 }
 
-Repository::~Repository() {
+FeatureRepository::~FeatureRepository() {
   for (uint8_t i = 0; i < featureCount; i++) {
     deleteFeature(i);
   }
@@ -17,7 +17,7 @@ Repository::~Repository() {
 
 /* Feature management */
 
-void Repository::createFeature(uint8_t type, int16_t featureId, FeatureSpec spec) {
+void FeatureRepository::createFeature(uint8_t type, int16_t featureId, FeatureSpec spec) {
   if (pinRepository->areAllPinsUnused(spec.pins, spec.pinCount)) {
     FeatureFactoryMethod new_feature = factory->getFactoryMethod(type);
 
@@ -32,7 +32,7 @@ void Repository::createFeature(uint8_t type, int16_t featureId, FeatureSpec spec
   }
 }
 
-void Repository::deleteFeature(int16_t featureId) {
+void FeatureRepository::deleteFeature(int16_t featureId) {
   if (isUsedFeatureId(featureId)) {
     Feature *feature = features[featureId];
 
@@ -42,15 +42,15 @@ void Repository::deleteFeature(int16_t featureId) {
   }
 }
 
-Feature* Repository::getFeature(int16_t featureId) {
+Feature* FeatureRepository::getFeature(int16_t featureId) {
   return isUsedFeatureId(featureId) ? features[featureId] : 0;
 }
 
-bool Repository::isUsedFeatureId(int16_t id) {
+bool FeatureRepository::isUsedFeatureId(int16_t id) {
   return isValidFeatureId(id) && features[id] != 0;
 }
 
-bool Repository::isValidFeatureId(int16_t id) {
+bool FeatureRepository::isValidFeatureId(int16_t id) {
   return id >= 0 && id < featureCount;
 }
 
