@@ -1,14 +1,14 @@
 #include <RiConfig.h>
 
 Feature* RiConfig::create(FeatureSpec spec) {
-  if (spec.pinCount == 0 && spec.configSize == sizeof(Repository*)) {
-    Repository *repo = (Repository*)spec.config;
+  if (spec.pinCount == 0 && spec.configSize == sizeof(FeatureRepository*)) {
+    FeatureRepository *repo = (FeatureRepository*)spec.config;
     return new RiConfig(repo);
   }
   return 0;
 }
 
-RiConfig::RiConfig(Repository *repo) {
+RiConfig::RiConfig(FeatureRepository *repo) {
   this->repo = repo;
 }
 

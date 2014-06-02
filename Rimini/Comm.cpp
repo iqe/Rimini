@@ -1,6 +1,6 @@
 #include <Comm.h>
 
-Comm::Comm(Repository *repo) {
+Comm::Comm(FeatureRepository *repo) {
   this->repo = repo;
 }
 

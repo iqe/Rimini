@@ -1,6 +1,6 @@
 #include <FeatureRepository.h>
 
-FeatureRepository::FeatureRepository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount) {
+FeatureRepository::FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, uint8_t featureCount) {
   this->pinRepository = pinRepository;
   this->factory = factory;
 

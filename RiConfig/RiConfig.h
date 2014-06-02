@@ -2,7 +2,7 @@
 #define RiConfig_h
 
 #include <Feature.h>
-#include <Repository.h>
+#include <FeatureRepository.h>
 
 /*
   RiConfig Message looks like this:
@@ -29,9 +29,9 @@ public:
   void readMessage(unsigned char *buf, int16_t msgsize);
 
 private:
-  Repository *repo;
+  FeatureRepository *repo;
 
-  RiConfig(Repository *repo);
+  RiConfig(FeatureRepository *repo);
 
   void createFeature(int16_t featureId, unsigned char *buf, int16_t msgsize);
 };

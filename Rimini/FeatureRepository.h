@@ -3,11 +3,11 @@
 
 #include <Feature.h>
 #include <PinRepository.h>
-#include <Factory.h>
+#include <FeatureFactory.h>
 
 class FeatureRepository {
 public:
-  FeatureRepository(PinRepository *pinRepository, Factory *factory, uint8_t featureCount);
+  FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, uint8_t featureCount);
   ~FeatureRepository();
 
   void createFeature(uint8_t type, int16_t featureId, FeatureSpec spec);
@@ -17,7 +17,7 @@ public:
 
 private:
   PinRepository *pinRepository;
-  Factory *factory;
+  FeatureFactory *factory;
 
   int16_t featureCount;
   Feature **features;

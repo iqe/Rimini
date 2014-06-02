@@ -1,12 +1,12 @@
-#ifndef Factory_h
-#define Factory_h
+#ifndef FeatureFactory_h
+#define FeatureFactory_h
 
 #include <Feature.h>
 
-class Factory {
+class FeatureFactory {
 public:
-  Factory(uint8_t methodCount);
-  ~Factory();
+  FeatureFactory(uint8_t methodCount);
+  ~FeatureFactory();
 
   FeatureFactoryMethod getFactoryMethod(uint8_t type);
   void setFactoryMethod(uint8_t type, FeatureFactoryMethod method);
