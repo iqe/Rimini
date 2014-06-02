@@ -1,16 +1,16 @@
 #include <FeatureRepository.h>
 
-FeatureRepository::FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, uint8_t featureCount) {
+FeatureRepository::FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, int16_t maxFeatureCount) {
   this->pinRepository = pinRepository;
   this->factory = factory;
 
   this->featureCount = featureCount;
-  this->features = new Feature*[featureCount];
+  this->features = new Feature*[maxFeatureCount];
 }
 
 FeatureRepository::~FeatureRepository() {
-  for (uint8_t i = 0; i < featureCount; i++) {
-    deleteFeature(i);
+  for (int16_t featureId = 0; featureId < featureCount; featureId++) {
+    deleteFeature(featureId);
   }
   delete features;
 }

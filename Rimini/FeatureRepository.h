@@ -7,7 +7,7 @@
 
 class FeatureRepository {
 public:
-  FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, uint8_t featureCount);
+  FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, int16_t maxFeatureCount);
   ~FeatureRepository();
 
   void createFeature(uint8_t type, int16_t featureId, FeatureSpec spec);
