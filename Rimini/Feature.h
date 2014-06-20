@@ -7,6 +7,8 @@ class Feature {
 public:
   ~Feature() {}
 
+  // static Feature* create(FeatureSpec spec);  <-- Required by all implementations
+
   virtual void update() {}
   virtual bool isChanged() { return false; }
 
