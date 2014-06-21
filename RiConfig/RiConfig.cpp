@@ -19,7 +19,7 @@ bool RiConfig::isChanged() {
 }
 
 void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
-  if (msgsize >= 3) { // action + featureId
+  if (msgsize >= 1) { // action
     uint8_t action = buf[0];
     int16_t featureId;
 
@@ -29,14 +29,18 @@ void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
       response = CONFIG_RSP_VERSION;
       break;
     case CONFIG_REQ_CREATE:
-      featureId = *((int16_t*)&buf[1]);
-      errorcode = createFeature(featureId, &buf[3], msgsize - 3);
-      response = CONFIG_RSP_CREATE;
+      if (msgsize >= 3) {
+        featureId = *((int16_t*)&buf[1]);
+        errorcode = createFeature(featureId, &buf[3], msgsize - 3);
+        response = CONFIG_RSP_CREATE;
+      }
       break;
     case CONFIG_REQ_DELETE:
-      featureId = *((int16_t*)&buf[1]);
-      errorcode = repo->deleteFeature(featureId);
-      response = CONFIG_RSP_DELETE;
+      if (msgsize >= 3) {
+        featureId = *((int16_t*)&buf[1]);
+        errorcode = repo->deleteFeature(featureId);
+        response = CONFIG_RSP_DELETE;
+      }
       break;
     }
   }
