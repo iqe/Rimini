@@ -36,6 +36,7 @@ bool RiHeartbeat::isChanged() {
 
 int16_t RiHeartbeat::writeMessage(unsigned char *buf, int16_t bufsize) {
   if (bufsize >= sizeof(name)) {
+    lastHeartbeatMillis = millis();
     buf[0] = name;
     return sizeof(name);
   }
