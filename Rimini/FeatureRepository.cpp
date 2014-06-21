@@ -5,7 +5,7 @@ FeatureRepository::FeatureRepository(PinRepository *pinRepository, FeatureFactor
   this->factory = factory;
 
   this->featureCount = featureCount;
-  this->features = new Feature*[maxFeatureCount];
+  this->features = new Feature*[maxFeatureCount]();
 }
 
 FeatureRepository::~FeatureRepository() {

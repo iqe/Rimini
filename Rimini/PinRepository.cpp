@@ -2,7 +2,7 @@
 
 PinRepository::PinRepository(uint8_t maxPinCount) {
   this->usedPinCount = maxPinCount;
-  usedPins = new int16_t[maxPinCount];
+  usedPins = new int16_t[maxPinCount]();
 }
 
 PinRepository::~PinRepository() {
