@@ -2,6 +2,7 @@
 #define Feature_h
 
 #include <inttypes.h>
+#include <Errors.h>
 
 class Feature {
 public:
