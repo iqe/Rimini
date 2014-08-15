@@ -63,7 +63,7 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
     case CONFIG_RSP_DELETE:
       if (bufsize >= 3) {
         buf[0] = response;
-        buf[1] = errorcode << 8;
+        buf[1] = errorcode >> 8;
         buf[2] = errorcode;
         responseSize = 3;
       }
