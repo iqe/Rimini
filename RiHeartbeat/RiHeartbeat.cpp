@@ -28,6 +28,17 @@ uint8_t RiHeartbeat::readName() {
   return name;
 }
 
+FeatureSpec RiHeartbeat::getFeatureSpec() {
+  FeatureSpec spec;
+
+  spec.pinCount = HB_NAME_PIN_COUNT;
+  spec.pins = config.namePins;
+  spec.configSize = sizeof(config);
+  spec.config = &config;
+
+  return spec;
+}
+
 void RiHeartbeat::update() {
   heartbeatRequired = millis() - lastHeartbeatMillis > config.intervalMillis;
 }

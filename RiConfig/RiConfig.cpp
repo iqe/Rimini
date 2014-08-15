@@ -1,4 +1,5 @@
 #include <RiConfig.h>
+#include <string.h>
 
 Feature* RiConfig::create(FeatureSpec spec) {
   if (spec.pinCount == 0 && spec.configSize == sizeof(FeatureRepository*)) {
@@ -33,6 +34,13 @@ void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
         featureId = buf[1] << 8 | buf[2];
         errorcode = createFeature(featureId, &buf[3], msgsize - 3);
         response = CONFIG_RSP_CREATE;
+      }
+      break;
+    case CONFIG_REQ_READ:
+      if (msgsize >= 3) {
+        featureId = buf[1] << 8 | buf[2];
+        errorcode = featureId; // FIXME Dirty hack to pass featureId to response
+        response = CONFIG_RSP_READ;
       }
       break;
     case CONFIG_REQ_DELETE:
@@ -70,6 +78,34 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
         buf[1] = errorcode >> 8;
         buf[2] = errorcode;
         responseSize = 3;
+      }
+      break;
+    case CONFIG_RSP_READ:
+      if (bufsize >= 5) {
+        int16_t featureId = errorcode; // FIXME Dirty hack!
+        Feature *feature = repo->getFeature(featureId);
+        errorcode = feature == 0 ? -E_UNKNOWN_FEATURE_ID : 0;
+
+        buf[responseSize++] = response;
+        buf[responseSize++] = featureId >> 8;
+        buf[responseSize++] = featureId;
+        buf[responseSize++] = errorcode >> 8;
+        buf[responseSize++] = errorcode;
+
+        if (feature != 0) {
+          FeatureSpec spec = feature->getFeatureSpec();
+
+          // pins
+          buf[responseSize++] = spec.pinCount;
+          memcpy(&buf[responseSize], spec.pins, spec.pinCount); // FIXME check buf size!
+          responseSize += spec.pinCount;
+
+          // config
+          buf[responseSize++] = spec.configSize >> 8;
+          buf[responseSize++] = spec.configSize;
+          memcpy(&buf[responseSize], spec.config, spec.configSize);
+          responseSize += spec.configSize;
+        }
       }
       break;
     case CONFIG_RSP_FEATURES:
