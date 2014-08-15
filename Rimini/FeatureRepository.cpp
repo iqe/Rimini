@@ -44,8 +44,7 @@ int16_t FeatureRepository::createFeature(uint8_t type, int16_t featureId, Featur
 }
 
 int16_t FeatureRepository::deleteFeature(int16_t featureId) {
-  bool unknownFeatureId = isUsedFeatureId(featureId);
-  if (unknownFeatureId) {
+  if (!isUsedFeatureId(featureId)) {
     return -E_UNKNOWN_FEATURE_ID;
   }
 
