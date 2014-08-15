@@ -18,6 +18,10 @@ FeatureRepository::~FeatureRepository() {
 /* Feature management */
 
 int16_t FeatureRepository::createFeature(uint8_t type, int16_t featureId, FeatureSpec spec) {
+  if (isUsedFeatureId(featureId)) {
+    return -E_FEATURE_ID_IN_USE;
+  }
+
   bool somePinsInUse = !pinRepository->areAllPinsUnused(spec.pins, spec.pinCount);
   if (somePinsInUse) {
     return -E_PINS_IN_USE;
