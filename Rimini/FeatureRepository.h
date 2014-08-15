@@ -15,6 +15,13 @@ public:
 
   Feature* getFeature(int16_t featureId);
 
+  /* Interface for retrieving all feature IDs.
+   * There is no getFeatureIds() because that would require dynamic memory handling
+   * which we want to avoid if it doesn't bring a real benefit.
+   */
+  int16_t getFeatureIdCount();
+  int16_t getFeatureId(int16_t index);
+
 private:
   PinRepository *pinRepository;
   FeatureFactory *factory;

@@ -61,6 +61,31 @@ Feature* FeatureRepository::getFeature(int16_t featureId) {
   return isUsedFeatureId(featureId) ? features[featureId] : 0;
 }
 
+/* Feature discovery */
+
+int16_t FeatureRepository::getFeatureIdCount() {
+  int16_t count = 0;
+  for (int16_t featureId = 0; featureId < maxFeatureCount; featureId++) {
+    if (isUsedFeatureId(featureId)) {
+      count++;
+    }
+  }
+  return count;
+}
+
+int16_t FeatureRepository::getFeatureId(int16_t index) {
+  int16_t pos = 0;
+  for (int16_t featureId = 0; featureId < maxFeatureCount; featureId++) {
+    if (isUsedFeatureId(featureId)) {
+      if (pos == index) {
+        return featureId;
+      }
+      pos++;
+    }
+  }
+  return -E_UNKNOWN_FEATURE_ID;
+}
+
 bool FeatureRepository::isUsedFeatureId(int16_t id) {
   return isValidFeatureId(id) && features[id] != 0;
 }
