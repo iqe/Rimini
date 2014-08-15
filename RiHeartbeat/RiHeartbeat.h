@@ -19,14 +19,13 @@ public:
   int16_t writeMessage(unsigned char *buf, int16_t bufsize);
 
 private:
-  uint8_t name;
-  uint32_t intervalMillis;
+  RiHeartbeatConfig config;
 
   bool heartbeatRequired;
   uint32_t lastHeartbeatMillis;
 
   RiHeartbeat(RiHeartbeatConfig *config);
-  uint8_t readName(RiHeartbeatConfig *config);
+  uint8_t readName();
 };
 
 #endif
