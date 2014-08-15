@@ -42,6 +42,10 @@ void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
         response = CONFIG_RSP_DELETE;
       }
       break;
+    case CONFIG_REQ_FEATURES:
+      errorcode = 0;
+      response = CONFIG_RSP_FEATURES;
+      break;
     }
   }
 }
@@ -66,6 +70,23 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
         buf[1] = errorcode >> 8;
         buf[2] = errorcode;
         responseSize = 3;
+      }
+      break;
+    case CONFIG_RSP_FEATURES:
+      int16_t featureId;
+      int16_t featureCount = repo->getFeatureIdCount();
+
+      if (bufsize >= 3 + featureCount * sizeof(featureCount)) {
+        buf[responseSize++] = response;
+        buf[responseSize++] = featureCount >> 8;
+        buf[responseSize++] = featureCount;
+
+        for (int i = 0; i < featureCount; i++) {
+          featureId = repo->getFeatureId(i);
+
+          buf[responseSize++] = featureId >> 8;
+          buf[responseSize++] = featureId;
+        }
       }
       break;
   }
