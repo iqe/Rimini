@@ -30,14 +30,14 @@ void RiConfig::readMessage(unsigned char *buf, int16_t msgsize) {
       break;
     case CONFIG_REQ_CREATE:
       if (msgsize >= 3) {
-        featureId = *((int16_t*)&buf[1]);
+        featureId = buf[1] << 8 | buf[2];
         errorcode = createFeature(featureId, &buf[3], msgsize - 3);
         response = CONFIG_RSP_CREATE;
       }
       break;
     case CONFIG_REQ_DELETE:
       if (msgsize >= 3) {
-        featureId = *((int16_t*)&buf[1]);
+        featureId = buf[1] << 8 | buf[2];
         errorcode = repo->deleteFeature(featureId);
         response = CONFIG_RSP_DELETE;
       }
