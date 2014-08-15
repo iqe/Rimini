@@ -19,7 +19,7 @@ private:
   PinRepository *pinRepository;
   FeatureFactory *factory;
 
-  int16_t featureCount;
+  int16_t maxFeatureCount;
   Feature **features;
 
   bool isValidFeatureId(int16_t id);

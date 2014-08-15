@@ -4,12 +4,12 @@ FeatureRepository::FeatureRepository(PinRepository *pinRepository, FeatureFactor
   this->pinRepository = pinRepository;
   this->factory = factory;
 
-  this->featureCount = maxFeatureCount;
+  this->maxFeatureCount = maxFeatureCount;
   this->features = new Feature*[maxFeatureCount]();
 }
 
 FeatureRepository::~FeatureRepository() {
-  for (int16_t featureId = 0; featureId < featureCount; featureId++) {
+  for (int16_t featureId = 0; featureId < maxFeatureCount; featureId++) {
     deleteFeature(featureId);
   }
   delete features;
@@ -66,6 +66,6 @@ bool FeatureRepository::isUsedFeatureId(int16_t id) {
 }
 
 bool FeatureRepository::isValidFeatureId(int16_t id) {
-  return id >= 0 && id < featureCount;
+  return id >= 0 && id < maxFeatureCount;
 }
 
