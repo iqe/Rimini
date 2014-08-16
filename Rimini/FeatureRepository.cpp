@@ -92,7 +92,7 @@ int16_t FeatureRepository::updateFeature(int16_t featureId, unsigned char *buf, 
   // update feature
   Feature *feature = features[featureId];
 
-  return feature->readConfig(buf, msgsize - 2);
+  return feature->readConfig(&buf[2], msgsize - 2);
 }
 
 int16_t FeatureRepository::deleteFeature(int16_t featureId) {
