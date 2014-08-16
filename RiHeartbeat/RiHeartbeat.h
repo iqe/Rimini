@@ -14,11 +14,11 @@ class RiHeartbeat : Feature {
 public:
   static Feature *create(FeatureSpec spec);
 
-  FeatureSpec getFeatureSpec();
-
   void update();
   bool isChanged();
   int16_t writeMessage(unsigned char *buf, int16_t bufsize);
+
+  int16_t writeConfig(unsigned char *buf, int16_t bufsize);
 
 private:
   RiHeartbeatConfig config;

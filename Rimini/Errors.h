@@ -4,6 +4,7 @@
 /* Common Errors */
 #define E_UNKNOWN_FEATURE_ID 10
 #define E_MESSAGE_TOO_SMALL 11
+#define E_BUFFER_TOO_SMALL 12
 
 /* Feature Repository */
 #define E_PINS_IN_USE 101

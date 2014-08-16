@@ -28,17 +28,6 @@ uint8_t RiHeartbeat::readName() {
   return name;
 }
 
-FeatureSpec RiHeartbeat::getFeatureSpec() {
-  FeatureSpec spec;
-
-  spec.pinCount = HB_NAME_PIN_COUNT;
-  spec.pins = config.namePins;
-  spec.configSize = sizeof(config);
-  spec.config = &config;
-
-  return spec;
-}
-
 void RiHeartbeat::update() {
   heartbeatRequired = millis() - lastHeartbeatMillis > config.intervalMillis;
 }
@@ -55,5 +44,36 @@ int16_t RiHeartbeat::writeMessage(unsigned char *buf, int16_t bufsize) {
     return sizeof(name);
   }
   return 0;
+}
+
+int16_t RiHeartbeat::writeConfig(unsigned char *buf, int16_t bufsize) {
+  int16_t p = 0;
+
+  int16_t pinsSize = HB_NAME_PIN_COUNT;
+  int16_t configSize = HB_NAME_PIN_COUNT + sizeof(config.intervalMillis);
+
+  if (bufsize < 1 + pinsSize + 2 + configSize) {
+    return -E_BUFFER_TOO_SMALL;
+  }
+
+  // used pins
+  buf[p++] = HB_NAME_PIN_COUNT;
+  for (int i = 0; i < HB_NAME_PIN_COUNT; i++) {
+    buf[p++] = config.namePins[i];
+  }
+
+  // config
+  buf[p++] = configSize >> 8;
+  buf[p++] = configSize;
+  for (int i = 0; i < HB_NAME_PIN_COUNT; i++) {
+    buf[p++] = config.namePins[i];
+  }
+
+  buf[p++] = config.intervalMillis >> 24;
+  buf[p++] = config.intervalMillis >> 16;
+  buf[p++] = config.intervalMillis >> 8;
+  buf[p++] = config.intervalMillis;
+
+  return p;
 }
 

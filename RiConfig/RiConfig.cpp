@@ -1,5 +1,4 @@
 #include <RiConfig.h>
-#include <string.h>
 
 Feature* RiConfig::create(FeatureSpec spec) {
   if (spec.pinCount == 0 && spec.configSize == sizeof(FeatureRepository*)) {
@@ -93,18 +92,15 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
         buf[responseSize++] = errorcode;
 
         if (feature != 0) {
-          FeatureSpec spec = feature->getFeatureSpec();
-
-          // pins
-          buf[responseSize++] = spec.pinCount;
-          memcpy(&buf[responseSize], spec.pins, spec.pinCount); // FIXME check buf size!
-          responseSize += spec.pinCount;
-
-          // config
-          buf[responseSize++] = spec.configSize >> 8;
-          buf[responseSize++] = spec.configSize;
-          memcpy(&buf[responseSize], spec.config, spec.configSize);
-          responseSize += spec.configSize;
+          int16_t count = feature->writeConfig(&buf[responseSize], bufsize - responseSize);
+          if (count >= 0) {
+              responseSize += count;
+          } else {
+            // set error code from count
+            responseSize -= 2;
+            buf[responseSize++] = count >> 8;
+            buf[responseSize++] = count;
+          }
         }
       }
       break;
