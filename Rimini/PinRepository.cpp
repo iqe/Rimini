@@ -9,11 +9,13 @@ PinRepository::~PinRepository() {
   delete usedPins;
 }
 
-bool PinRepository::areAllPinsUnused(uint8_t *checkedPins, uint8_t checkedPinsCount) {
-  for (int i = 0; i < checkedPinsCount; i++) {
-    uint8_t pin = checkedPins[i];
+bool PinRepository::areAllPinsUnused(uint8_t *pins, uint8_t pinCount) {
+  return areAllPinsUsedByFeature(0, pins, pinCount);
+}
 
-    if (isUsedPin(pin)) {
+bool PinRepository::areAllPinsUsedByFeature(int16_t featureId, uint8_t *pins, uint8_t pinCount) {
+  for (int i = 0; i < pinCount; i++) {
+    if (!isValidPin(pins[i]) || usedPins[i] != featureId) {
       return false;
     }
   }
@@ -36,10 +38,6 @@ void PinRepository::unregisterPinsOfFeature(int16_t featureId) {
       usedPins[i] = 0;
     }
   }
-}
-
-bool PinRepository::isUsedPin(uint8_t pin) {
-  return isValidPin(pin) && usedPins[pin] != 0;
 }
 
 bool PinRepository::isValidPin(uint8_t pin) {
