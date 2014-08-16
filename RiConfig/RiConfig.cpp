@@ -112,7 +112,7 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
       int16_t featureId;
       int16_t featureCount = repo->getFeatureIdCount();
 
-      if (bufsize >= 3 + featureCount * sizeof(featureCount)) {
+      if (bufsize >= 3 + featureCount * sizeof(featureId)) {
         buf[responseSize++] = response;
         buf[responseSize++] = featureCount >> 8;
         buf[responseSize++] = featureCount;
