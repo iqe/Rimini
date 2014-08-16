@@ -63,6 +63,8 @@ int16_t FeatureRepository::createFeature(int16_t featureId, unsigned char *buf, 
     return errorcode;
   }
 
+  features[featureId] = feature;
+
   // register used pins
   pinRepository->registerPinsForFeature(featureId, pins, pinCount);
 
