@@ -15,10 +15,6 @@ FeatureRepository::~FeatureRepository() {
   delete features;
 }
 
-void FeatureRepository::addConfiguredFeature(int16_t featureId, Feature *feature) {
-  features[featureId] = feature;
-}
-
 /* Feature management */
 
 int16_t FeatureRepository::createFeature(int16_t featureId, unsigned char *buf, int16_t msgsize) {

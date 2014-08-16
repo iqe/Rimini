@@ -26,18 +26,24 @@
 #define CONFIG_REQ_TYPES 70
 #define CONFIG_RSP_TYPES 71
 
+#define CONFIG_CONF_SIZE (sizeof(uint8_t) + sizeof(uint32_t))
+
 class RiConfig : Feature {
 public:
-  RiConfig(FeatureRepository *repo);
+  static Feature* create();
 
   bool isChanged();
   void readMessage(unsigned char *buf, int16_t msgsize);
   int16_t writeMessage(unsigned char *buf, int16_t bufsize);
 
+  int16_t readConfiguration(unsigned char *buf, int16_t msgsize);
+
 private:
   FeatureRepository *repo;
   uint8_t response;
   int16_t errorcode;
+
+  RiConfig();
 };
 
 #endif

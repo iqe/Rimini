@@ -15,17 +15,6 @@ RiHeartbeat::RiHeartbeat() {
   lastHeartbeatMillis = 0;
 }
 
-RiHeartbeat::RiHeartbeat(uint8_t pin0, uint8_t pin1, uint8_t pin2, uint32_t intervalMillis) {
-  streamIdPins[0] = pin0;
-  streamIdPins[1] = pin1;
-  streamIdPins[2] = pin2;
-
-  this->intervalMillis = intervalMillis;
-
-  heartbeatRequired = false;
-  lastHeartbeatMillis = 0;
-}
-
 void RiHeartbeat::update() {
   heartbeatRequired = millis() - lastHeartbeatMillis > intervalMillis;
 }

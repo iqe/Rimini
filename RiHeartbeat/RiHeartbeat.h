@@ -16,9 +16,6 @@ class RiHeartbeat : Feature {
 public:
   static Feature *create();
 
-  /* Special constructor for Rimini bootstrap */
-  RiHeartbeat(uint8_t pin0, uint8_t pin1, uint8_t pin2, uint32_t intervalMillis);
-
   void update();
   bool isChanged();
   int16_t writeMessage(unsigned char *buf, int16_t bufsize);
