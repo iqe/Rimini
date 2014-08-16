@@ -36,7 +36,7 @@ public:
   void readMessage(unsigned char *buf, int16_t msgsize);
   int16_t writeMessage(unsigned char *buf, int16_t bufsize);
 
-  int16_t readConfiguration(unsigned char *buf, int16_t msgsize);
+  int16_t readConfig(unsigned char *buf, int16_t msgsize);
 
 private:
   FeatureRepository *repo;

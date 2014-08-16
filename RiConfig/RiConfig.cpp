@@ -133,14 +133,14 @@ int16_t RiConfig::writeMessage(unsigned char *buf, int16_t bufsize) {
   return responseSize;
 }
 
-int16_t RiConfig::readConfiguration(unsigned char *buf, int16_t msgsize) {
+int16_t RiConfig::readConfig(unsigned char *buf, int16_t msgsize) {
   // Note: This must only be called during Arduino setup() to bootstrap the system
   if (msgsize < CONFIG_CONF_SIZE) {
     return -E_MESSAGE_TOO_SMALL;
   }
   int p = 1; // start at 1 to skip pin count
 
-  uint32_t repoPointer = buf[p++] >> 24 | buf[p++] >> 16 | buf[p++] >> 8 | buf[p++];
+  uint32_t repoPointer = buf[p++] << 24 | buf[p++] << 16 | buf[p++] << 8 | buf[p++];
   repo = (FeatureRepository*)repoPointer;
 
   return p;
