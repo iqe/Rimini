@@ -10,7 +10,11 @@ public:
   FeatureRepository(PinRepository *pinRepository, FeatureFactory *factory, int16_t maxFeatureCount);
   ~FeatureRepository();
 
-  int16_t createFeature(uint8_t type, int16_t featureId, FeatureSpec spec);
+  /* Special method for Rimini bootstrap */
+  void addConfiguredFeature(int16_t featureId, Feature *feature);
+
+  int16_t createFeature(int16_t featureId, unsigned char *buf, int16_t bufsize);
+  int16_t updateFeature(int16_t featureId, unsigned char *buf, int16_t bufsize);
   int16_t deleteFeature(int16_t featureId);
 
   Feature* getFeature(int16_t featureId);

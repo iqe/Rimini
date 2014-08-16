@@ -4,18 +4,11 @@
 #include <inttypes.h>
 #include <Errors.h>
 
-struct FeatureSpec {
-  uint8_t pinCount;
-  uint8_t* pins;
-  int16_t configSize;
-  void* config;
-};
-
 class Feature {
 public:
   ~Feature() {}
 
-  // static Feature* create(FeatureSpec spec);  <-- Required by all implementations
+  // static Feature* create(unsigned char *buf, int16_t bufsize);  <-- Required by all implementations
 
   virtual void update() {}
   virtual bool isChanged() { return false; }
@@ -23,10 +16,11 @@ public:
   virtual int16_t writeMessage(unsigned char *buf, int16_t bufsize) { return 0; }
   virtual void readMessage(unsigned char *buf, int16_t msgsize) {}
 
+  virtual int16_t readConfig(unsigned char *buf, int16_t msgsize) { return 0; }
   virtual int16_t writeConfig(unsigned char *buf, int16_t bufsize) { return 0; }
 };
 
-typedef Feature* (*FeatureFactoryMethod)(FeatureSpec);
+typedef Feature* (*FeatureFactoryMethod)(void);
 
 #endif
 
